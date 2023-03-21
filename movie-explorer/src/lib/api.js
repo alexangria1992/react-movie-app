@@ -18,7 +18,7 @@ export default class TheMovieDbApi {
 
   getGenres = async () => {
     const response = await fetch(
-      `${this.apiBaseUrl}/genre/movie?api_key=${this.apiKey}`
+      `${this.apiBaseUrl}/genre/movie/list?api_key=${this.apiKey}`
     );
 
     return response.json();
