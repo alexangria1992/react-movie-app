@@ -1,5 +1,3 @@
-import { searchMovies } from "../redux/search";
-
 export default class TheMovieDbApi {
   apiBaseUrl = "https://api.themoviedb.org/3";
   apiKey;
@@ -7,6 +5,14 @@ export default class TheMovieDbApi {
   constructor(apiKey) {
     this.apiKey = apiKey;
   }
+
+  getPopularMovies = async (page = 1) => {
+    const response = await fetch(
+      `${this.apiBaseUrl}/movie/popular?api_key=${this.apiKey}&page=${page}`
+    );
+
+    return response.json();
+  };
 
   searchMovies = async (query) => {
     const response = await fetch(

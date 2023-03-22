@@ -7,6 +7,7 @@ import {
   takeLatest,
 } from "redux-saga/effects";
 import { fetchedSearchMovies, searchMovies } from "../redux/search";
+import { getPopularMovies, fetchedPopularMovies } from "../redux/movies";
 import { API_KEY } from "../config";
 import TheMovieDbApi from "../lib/api";
 import { fetchedGenres, getGenres } from "../redux/genres";
@@ -23,8 +24,15 @@ function* fetchSearchMovies(action) {
   yield put(fetchedSearchMovies(yield call(api.searchMovies, action.payload)));
 }
 
+function* fetchPopularMovies(action) {
+  yield put(
+    fetchedPopularMovies(yield call(api.getPopularMovies, action.payload))
+  );
+}
+
 export default function* watcherSaga() {
   yield all([
+    yield takeEvery(getPopularMovies.type, fetchPopularMovies),
     yield takeEvery(getGenres.type, fetchGenres),
     yield takeLatest(searchMovies.type, fetchSearchMovies),
   ]);
